@@ -102,6 +102,8 @@ html,body{height:100%;margin:0;background:#000;overflow:hidden}
 <p class="serif italic text-lg text-amber-100/90 mt-3 pop" style="animation-delay:2.2s">23 looks beautiful on you. Forever yours. ❤️</p><p class="serif italic text-lg text-amber-200 mt-2 pop" style="animation-delay:3.2s">— Yash</p></div>
 </section>
 
+<!-- Uploaded birthday song replaces the old generated background music -->
+<audio id="birthdaySong" src="birthday-song.mp3" preload="auto" loop></audio>
 <!-- start / replay -->
 <div id="ov" class="absolute top-4 right-4 z-50 rounded-full bg-black/60 px-4 py-2 text-sm text-amber-200 border border-amber-300/30" style="display:none">Tap for sound 🔊</div><div id="old" class="hidden">
 <p class="script gold text-6xl mb-2">For my love</p>
@@ -131,18 +133,11 @@ function loop(){g.clearRect(0,0,W,H);
   return p.l>0&&p.y<H+40});
  requestAnimationFrame(loop)}loop();
 
-/* music: soft piano-like pad + arpeggio that builds */
-let ac,mg,t0,mt;
-const CH=[[220,261.63,329.63,440],[174.61,220,261.63,349.23],[261.63,329.63,392,523.25],[196,246.94,293.66,392]];
-function nt(f,t,d,ty,v){const o=ac.createOscillator(),n=ac.createGain();o.type=ty;o.frequency.value=f;n.gain.setValueAtTime(0,t);n.gain.linearRampToValueAtTime(v,t+.04);n.gain.exponentialRampToValueAtTime(.0001,t+d);o.connect(n).connect(mg);o.start(t);o.stop(t+d+.1)}
-let step=0;function tick(){const t=ac.currentTime+.05,e=(performance.now()-t0)/1000,lv=Math.min(1,e/26),ch=CH[Math.floor(step/8)%4],i=step%8;
- if(i==0){ch.slice(0,3).forEach(f=>nt(f/2,t,3.4,'sine',.07));nt(ch[0]/4,t,3,'triangle',.1)}
- nt(ch[[0,1,2,3,2,1,2,3][i]],t,1.2,'triangle',.05+.07*lv);
- if(e>24&&i%2==0)nt(ch[3]*2,t,1.5,'sine',.04);
- step++}
-function music(){ac=new(window.AudioContext||window.webkitAudioContext)();mg=ac.createGain();mg.gain.value=.9;mg.connect(ac.destination);step=0;mt=setInterval(tick,420)}
+/* Uploaded song: the old synthesized soundtrack has been removed. */
+ const song=$('birthdaySong');
+ function music(){song.volume=0.9;const p=song.play();if(p&&p.catch)p.catch(()=>{$('ov').style.display='block'});}
 
-/* timeline */
+ /* timeline */
 const L=["Happy 23rd Birthday, Akshita, My Love ❤️","You are the most beautiful part of my life.","May your smile always shine brighter than the stars.","You deserve all the happiness, love, and success in this world.","Forever grateful to have you in my life. I love you so much! ❤️🖤<br><span class='serif italic text-xl text-amber-200'>— Yash</span>"];
 function show(n){S.forEach((s,i)=>s.classList.toggle('on',i==n))}
 function at(s,f){T.push(setTimeout(f,s*1000))}
